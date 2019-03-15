@@ -3,6 +3,10 @@ import logo from './logo.svg';
 import './App.css';
 import * as RuntimeConfig from './runtimeConfig';
 class App extends Component {
+  componentDidMount () {
+
+  }
+
   render() {
     return (
       <div className="App">
