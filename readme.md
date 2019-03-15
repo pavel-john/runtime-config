@@ -1,4 +1,4 @@
-# Client-side runtime config
+# Runtime Client-Side Configuration
 Sample project demonstrating how to access configuration and environment variables in browser on runtime.
 
 ## Usage
@@ -14,3 +14,5 @@ This is built with
 - npm 6.7.0
 
 I suppose it would work on similar unix-like setups too.
+
+##
