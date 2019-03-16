@@ -56,7 +56,7 @@ const schema = {
 // It enters the root schema object and recursively (DFS) goes through the schema
 // and picks only those objects which contain public configuration. From those, it
 // omits configuration variables which are not public.
-const selectPublic = (node, address = []) => {
+const selectPublic = (node, nodePath = []) => {
   // is the current node a leave (no descendants with public variables)?
   let leave = true;
   // resulting object after filtering out private variables
@@ -64,8 +64,8 @@ const selectPublic = (node, address = []) => {
 
   for (let key in node) {
     if (node.hasOwnProperty(key) && typeof node[key] === 'object') {
-      // recurrent call
-      const child = selectPublic(node[key], [...address, key]);
+      // recursive call
+      const child = selectPublic(node[key], [...nodePath, key]);
       if (child != null) {
         leave = false;
         filtered[key] = child;
@@ -76,7 +76,7 @@ const selectPublic = (node, address = []) => {
   // if the subtree is a leave
   if (leave) {
     // if it is a public variable, return value, return null otherwise
-    return (node.public === true) ? props.config.get(address.join('.')) : null;
+    return (node.public === true) ? props.config.get(nodePath.join('.')) : null;
   } else {
     // return subtree containing only public variables
     return filtered;
