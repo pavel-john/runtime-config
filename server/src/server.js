@@ -13,7 +13,11 @@ const rootPath = path.join(__dirname, '../../');
 const publicPath = path.join(rootPath, '/client/build');
 const configDirPath = path.join(rootPath, '/server/config');
 // initialize configuration
-config.init(configDirPath);
+try {
+  config.init(configDirPath);
+} catch (error) {
+  console.error(error);
+}
 const express = Express();
 // Runtime configuration middleware
 //

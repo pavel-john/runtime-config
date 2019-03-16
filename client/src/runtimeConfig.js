@@ -1,8 +1,8 @@
 /* global XMLHttpRequest */
 import get from 'lodash/get';
 
-// the module properties
-const props = {
+// the module state properties
+const state = {
     // constant settings
     method: 'GET',
     headers: [{
@@ -39,8 +39,8 @@ const getRequest = () =>
             reject({ status: xmlhttp.statusText, error });
             return;
         };
-        xmlhttp.open(props.method, props.relativeUrl, true);
-        for (const header of props.headers) {
+        xmlhttp.open(state.method, state.relativeUrl, true);
+        for (const header of state.headers) {
             const { name, value } = header;
             xmlhttp.setRequestHeader(name, value);
         }
@@ -52,19 +52,19 @@ const getRequest = () =>
 // waits for loading anyways
 export const load = async () => {
     const result = await getRequest();
-    props.config = JSON.parse(result);
-    props.loaded = true;
-    for (const listener of props.loadedListeners) {
+    state.config = JSON.parse(result);
+    state.loaded = true;
+    for (const listener of state.loadedListeners) {
         listener();
     }
 };
 
 // this creates a new promise which is resolved when configuration loads
 const blockUntilLoaded = () => new Promise(resolve => {
-    if (props.loaded) {
+    if (state.loaded) {
         resolve();
     } else {
-        props.loadedListeners.push(resolve);
+        state.loadedListeners.push(resolve);
     }
 });
 
@@ -72,5 +72,5 @@ const blockUntilLoaded = () => new Promise(resolve => {
 // we need to wait until it is loaded
 export const read = async name => {
     await blockUntilLoaded();
-    return get(props.config, name);
+    return get(state.config, name);
 };
