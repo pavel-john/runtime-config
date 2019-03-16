@@ -1,3 +1,4 @@
+import "@babel/polyfill";
 import Express from 'express';
 import path from 'path';
 
@@ -5,14 +6,25 @@ import * as config from './config';
 import * as runtimeConfigMiddleware from './runtimeConfigMiddleware';
 
 // common root directory to client and server
+// The exotic relative rootPath is there for a simple reason. The project has
+// two subdirectories, client and server. Server sources therefore reside in server/src
+// and to get to project root, we need to go two levels up (../../).
 const rootPath = path.join(__dirname, '../../');
 const publicPath = path.join(rootPath, '/client/build');
 const configDirPath = path.join(rootPath, '/server/config');
 // initialize configuration
 config.init(configDirPath);
 const express = Express();
-// runtime configuration middlewarte
-express.get(/\/runtimeConfig.js$/, runtimeConfigMiddleware.buildHandleRequest());
+// Runtime configuration middleware
+//
+// Since we want to access the configuration on client, we add a new route to our
+// Express server. The following simple middleware generates a javascript file where
+// it assigns the configuration object to __runtimeConfig variable.This generated
+// script will eventually run on client
+//
+// We add the middleware above the static server to grab the route first.The static
+// server then handles the rest.
+express.get(/\/runtimeConfig$/, runtimeConfigMiddleware.buildHandleRequest());
 // static file server
 express.use(Express.static(publicPath));
 
