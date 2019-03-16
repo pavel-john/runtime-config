@@ -103,8 +103,4 @@ export const get = name => props.config.get(name);
 
 // To make the values accessible outside of the module, add a getter for it.
 // The getter also resolves the situation when publicConfig is empty.
-export const getPublicConfig = async () => {
-
-  // todo: resolve when loaded
-  props.publicConfig || {};
-}
+export const getPublicConfig = () => props.publicConfig || {};

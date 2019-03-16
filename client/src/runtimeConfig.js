@@ -72,5 +72,5 @@ const blockUntilLoaded = () => new Promise(resolve => {
 // we need to wait until it is loaded
 export const read = async name => {
     await blockUntilLoaded();
-    return get(config, name);
+    return get(props.config, name);
 };

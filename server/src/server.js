@@ -1,3 +1,4 @@
+import "@babel/polyfill";
 import Express from 'express';
 import path from 'path';
 
@@ -23,7 +24,7 @@ const express = Express();
 //
 // We add the middleware above the static server to grab the route first.The static
 // server then handles the rest.
-express.get(/\/runtimeConfig.js$/, runtimeConfigMiddleware.buildHandleRequest());
+express.get(/\/runtimeConfig$/, runtimeConfigMiddleware.buildHandleRequest());
 // static file server
 express.use(Express.static(publicPath));
 

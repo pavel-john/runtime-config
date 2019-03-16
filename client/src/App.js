@@ -15,13 +15,13 @@ class App extends Component {
   }
 
   componentValueFromConfig = variableName =>
-    RuntimeConfig.read(variableName).then(value => setState({ [variableName]: value }));
+    RuntimeConfig.read(variableName).then(value => this.setState({ [variableName]: value }));
 
   componentDidMount() {
-    componentValueFromConfig('port');
-    componentValueFromConfig('value1');
-    componentValueFromConfig('value2');
-    componentValueFromConfig('value3');
+    this.componentValueFromConfig('port');
+    this.componentValueFromConfig('value1');
+    this.componentValueFromConfig('value2');
+    this.componentValueFromConfig('value3');
   }
 
   render() {
