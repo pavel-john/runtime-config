@@ -18,7 +18,6 @@ class App extends Component {
     RuntimeConfig.read(variableName).then(value => setState({ [variableName]: value }));
 
   componentDidMount() {
-    RuntimeConfig.load();
     componentValueFromConfig('port');
     componentValueFromConfig('value1');
     componentValueFromConfig('value2');
