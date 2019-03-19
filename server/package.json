@@ -11,6 +11,7 @@
   "author": "pavel.john@gmail.com",
   "license": "ISC",
   "dependencies": {
+    "@babel/polyfill": "^7.2.5",
     "convict": "^4.4.1",
     "express": "^4.16.4",
     "lodash": "^4.17.11"

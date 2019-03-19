@@ -3,6 +3,27 @@ import logo from './logo.svg';
 import './App.css';
 import * as RuntimeConfig from './runtimeConfig';
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { 
+      port: 0,
+      value1: 0,
+      value2: 0,
+      value3: 0,
+    };
+  }
+
+  componentValueFromConfig = variableName =>
+    RuntimeConfig.read(variableName).then(value => this.setState({ [variableName]: value }));
+
+  componentDidMount() {
+    this.componentValueFromConfig('port');
+    this.componentValueFromConfig('value1');
+    this.componentValueFromConfig('value2');
+    this.componentValueFromConfig('value3');
+  }
+
   render() {
     return (
       <div className="App">
@@ -22,10 +43,10 @@ class App extends Component {
           <p>
             Runtime config variables:
             <ul className="vars">
-              <li>Port: {RuntimeConfig.read('port')}</li>
-              <li>Value 1: {RuntimeConfig.read('client.value1')}</li>
-              <li>Value 2: {RuntimeConfig.read('client.value2')}</li>
-              <li>Value 3: {RuntimeConfig.read('value3')}</li>
+              <li>Port: {this.state.port}</li>
+              <li>Value 1: {this.state.value1}</li>
+              <li>Value 2: {this.state.value2}</li>
+              <li>Value 3: {this.state.value3}</li>
             </ul>
           </p>
         </header>
