@@ -4,6 +4,7 @@ import path from 'path';
 
 import * as config from './config';
 import * as runtimeConfigMiddleware from './runtimeConfigMiddleware';
+import * as runtimeConfigStaticMiddleware from './runtimeConfigStaticMiddleware';
 
 // common root directory to client and server
 // The exotic relative rootPath is there for a simple reason. The project has
@@ -29,6 +30,7 @@ const express = Express();
 // We add the middleware above the static server to grab the route first.The static
 // server then handles the rest.
 express.get(/\/runtimeConfig$/, runtimeConfigMiddleware.buildHandleRequest());
+express.get(/\/runtimeConfigStatic\.js$/, runtimeConfigStaticMiddleware.buildHandleRequest());
 // static file server
 express.use(Express.static(publicPath));
 
